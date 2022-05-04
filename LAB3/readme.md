@@ -1,9 +1,10 @@
 # Laboratório 03 | Relatório
-Análise de desempenho e cálculo da aceleração do programa concorrente que encontra a quantidade de valores de um vetor de numeros reais que estao dentro de uma 
-faixa de valores dada.
+Análise de desempenho e cálculo da aceleração do programa de solução sequencial e uma solução concorrente para o problema de encontrar o menor e o maior valor de um vetor de numeros reais.
+
 
 ## Índice
 * [Informações sobre o hardware](#informações-sobre-o-hardware)
+* [Estratégia de Divisão das threads](#estrategia-de-divisao-das-threads)
 * [Como rodar o programa](#como-rodar-o-programa)
 * [Tempos de execução](#tempos-de-execução)
 * [Cálculo da aceleração](#cálculo-da-aceleração)
@@ -12,6 +13,9 @@ faixa de valores dada.
 - Distro: Ubuntu 20.04.4 LTS
 - Nome do Modelo: Intel(R) Core(TM) i3-8145U CPU @ 2.10GHz
 - Arquitetura: x86_64
+
+## Estratégia de Divisão das threads
+:checkbox: Optei por fazer uma divisão das threads em blocos, portanto, tendo 4 threads, dividimos o vetor em 4 grandes blocos, nos quais cada thread estará processando seu bloco respectivo.
 
 ## Como rodar o programa
 :thinking: Compila e executa o programa através dos comandos:
