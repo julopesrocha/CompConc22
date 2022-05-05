@@ -15,7 +15,7 @@ Análise de desempenho e cálculo da aceleração do programa de solução seque
 - Arquitetura: x86_64
 
 ## Estratégia de Divisão das threads
-:checkbox: Optei por fazer uma divisão das threads em blocos, portanto, tendo 4 threads, dividimos o vetor em 4 grandes blocos, nos quais cada thread estará processando seu bloco respectivo.
+:exclamation: Optei por fazer uma divisão das threads em blocos, portanto, tendo 4 threads, dividimos o vetor em 4 grandes blocos, nos quais cada thread estará processando seu bloco respectivo.
 
 ## Como rodar o programa
 :thinking: Compila e executa o programa através dos comandos:
