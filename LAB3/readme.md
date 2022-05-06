@@ -47,10 +47,10 @@ Por conta disso, todos os testes foram realizados usando como base o intervalo 1
 ### Dimensão 10<sup>8</sup>
 | Solução | Tempo de execução |
 | --- | --- |
-| **Sequencial** | ?s |                                                                                                                                                                                 
-| **1 Thread** | 0.324655s |
-| **2 Threads** | 0.414614s |
-| **4 Threads** | 0.2333683s |
+| **Sequencial** | 0.324655s |                                                                                                                                                                                 
+| **1 Thread** | 0.281228s |
+| **2 Threads** | 0.189437s |
+| **4 Threads** | 0.062707s |
 
 ## Cálculo da aceleração
 :abacus: Para realizar o cálculo da aceleração e poder estimar o ganho de desempenho, usaremos a Lei de Amdahl. O ganho de velocidade da execução é dado por: 
