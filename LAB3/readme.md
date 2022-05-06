@@ -69,11 +69,13 @@ T<sub>sequencial</sub> / t<sub>s</sub> + t<sub>s</sub>, onde
 ### Dimensão 10<sup>7</sup>
  | Threads | Aceleração |
  | --- | --- |
- | **2 Threads** | ?s |
- | **4 Threads** | ?s |
+ | **1 Thread** | 1.020977s |
+ | **2 Threads** | 2.677728s |
+ | **4 Threads** | 4.417935s |
  
  ### Dimensão 10<sup>8</sup>
  | Threads | Aceleração |
  | --- | --- |
- | **2 Threads** | ?s |
- | **4 Threads** | ?s |
+ | **1 Thread** | 1.154419s |
+ | **2 Threads** | 2.188666s |
+ | **4 Threads** | 3.726620s |
