@@ -32,9 +32,9 @@ Por conta disso, todos os testes foram realizados usando como base o intervalo 1
 
 ### Dimensão 10<sup>5</sup>
 | Nº Threads | Tempo Sequencial | Tempo Concorrente | Ganho de Aceleração |
-| --- | --- |                                                                                                                                                                                 
-| **1 Thread** | 0.001834s | 0.002511	| 0.730450 |
-| **2 Threads** | 0.001905s | 0.001483 |	1.28438 |
+| --- | --- |                                                
+| **1 Thread**  | 0.001834s | 0.002511	| 0.730450 |
+| **2 Threads** | 0.001905s | 0.001483 |	1.28438  |
 | **4 Threads** | 0.001368s | 0.001620 |	0.844427 |
 
 ### Dimensão 10<sup>7</sup>
@@ -54,10 +54,10 @@ Por conta disso, todos os testes foram realizados usando como base o intervalo 1
 
 ## Cálculo da aceleração
 :abacus: Para realizar o cálculo da aceleração e poder estimar o ganho de desempenho, usaremos a Lei de Amdahl. O ganho de velocidade da execução é dado por: 
-T<sub>sequencial</sub> / t<sub>s</sub> + t<sub>s</sub>, onde
+T<sub>sequencial</sub> / t<sub>s</sub> + t<sub>c</sub>, onde
 - T<sub>sequencial</sub>: Tempo total de execução do programa sequencial
 - t<sub>s</sub>: Tempo da parte sequencial do programa
-- t<sub>s</sub>: Tempo da parte concorrente do programa usando P processadores
+- t<sub>c</sub>: Tempo da parte concorrente do programa usando P processadores
 
 ### Dimensão 10<sup>5</sup>
  | Threads | Aceleração |
