@@ -24,7 +24,7 @@
 
 // Escopo Global
 
-long long int dim; // dimensão do vetor de entrada
+long int dim; // dimensão do vetor de entrada
 int nthreads; // número de threads
 float *vetor; // vetor de entrada  
 
@@ -33,18 +33,19 @@ float geraFloat() {
   return ((float) rand()) / ((float)RAND_MAX) * 1000.1;
 }
 
-void deltaTempo(double inicio, char mensagem[]) {
+double deltaTempo(double inicio, char mensagem[]) {
   double fim, delta;
   GET_TIME(fim);
   delta = fim - inicio;
   printf("Tempo %s: %lf\n", mensagem, delta);
+  return delta;
 }
 
 
 // Fluxo das threads
 typedef struct {
-    float maior; 
-    float menor;
+    long int maior; 
+    long int menor;
 } tArgs;
 
 
@@ -54,33 +55,39 @@ void * tarefa(void * arg) {
     long int tamanhoBloco = dim/nthreads; // tamanho do bloco que cada thread irá executar
     long int inicial = id * tamanhoBloco; // elemento inicia do vetor
     long int final = id * tamanhoBloco; // elemento inicia do vetor
-    float *maior, *menor;
+    tArgs *estrutura = malloc(sizeof(tArgs));
+    long int maior = vetor[inicial];
+    long int menor = vetor[inicial];
 
     // Trata o resto da divisão de blocos, se houver
-    if(id == nthreads) {
+    if(id == nthreads-1) {
         final = dim;
     }
 
     // Execução
-    maior = menor = 0;
+
     for(long int i = inicial; i < final; i++){
-        if(vetor[i] > *maior){
-            *maior = vetor[i];
-        } else if(vetor[i] < *menor){
-            *menor = vetor[i];
+        if(vetor[i] > maior){
+            maior = vetor[i];
+        } else if(vetor[i] < menor){
+            menor = vetor[i];
         }
-        pthread_exit((void *)maior);
-        pthread_exit((void *)menor);
     }
+    estrutura->maior=maior;
+    estrutura->menor=menor;
+
+    //retorna o maior e o menor
+    pthread_exit((void *) estrutura);
 }
 
 // Fluxo Principal
 int main(int argc, char *argv[]) {
-    float maiorSeq, menorSeq;
+    int maiorSeq, menorSeq, maiorConc, menorConc;
     double inicio; // tomada de tempo
     pthread_t *tid; // identificador de threads no sistema
-    float *maior, *menor; /* valores de retorno das threads | a função join já recebe um endereço, portanto, não é necessário alocar espaço na memória */
-    float maiorConc, menorConc;
+    tArgs *retorno; // valor de retorno das threads | a função join já recebe um endereço, portanto, não é necessário alocar espaço na memória
+
+
     /* Recebe e Valida os parêmetros de entrada, são eles:
     (nome do programa, dimensão do vetor, número de threads ) */
     if(argc < 3) {
@@ -100,22 +107,27 @@ int main(int argc, char *argv[]) {
 
     /* Preenche o vetor de entrada com valores aleatórios */
     for(long int i=0; i<dim; i++){
-        vetor[i] = geraFloat();
+        vetor[i] = rand() % (i+1);
     }
     printf("\n");
     /* Execução | Sequencial */
     GET_TIME(inicio);
 
-    maiorSeq = menorSeq = vetor[0];
-    for(long int i=1; i<dim; i++){
-        if(vetor[i] > maiorSeq){
-            maiorSeq = vetor[i];
-        } else if (vetor[i] < menorSeq){
-            menorSeq = vetor[i];
+
+    for(long int i=0; i<dim; i++){
+        if(i==0) {
+            maiorSeq = vetor[0];
+            menorSeq = vetor[0];
+        } else {
+            if(vetor[i] > maiorSeq){
+                maiorSeq = vetor[i];
+            } else if (vetor[i] < menorSeq){
+                menorSeq = vetor[i];
+            }
         }
     }
 
-    deltaTempo(inicio, "Sequencial");
+    double Tseq = deltaTempo(inicio, "Sequencial");
 
     /* Execução | Concorrente */
     GET_TIME(inicio);
@@ -134,32 +146,36 @@ int main(int argc, char *argv[]) {
             }
         }
         // Aguarda término de execução
+        maiorConc = vetor[0];
+        menorConc = vetor[0];
         for(long int i=0; i<nthreads; i++){
-            if(pthread_join(*(tid+i), (void**)&maior)){
+            if(pthread_join(*(tid+i), (void**) &retorno)){
                 fprintf(stderr,"ERRO--pthred_join\n");
                 return 4;
             }
+            // valores globais
+            if(retorno->maior>maiorConc){
+                maiorConc = retorno->maior;
+            }
+            if(retorno->menor<menorConc){
+                menorConc = retorno->menor;
+            }
         }
-        maiorConc = *maior;
-        menorConc = *menor;
+
         // Computa os valores finais
-    deltaTempo(inicio, "Concorrente");
+    double Tconc = deltaTempo(inicio, "Concorrente");
     
     /* Exibição de resultados */
 
-        // Maior elemento
-    if(maiorSeq == maiorConc){
-        printf("Maior elemento do vetor: %f\n", maiorSeq);
+        // Verifica valores e exibe
+    if(maiorSeq == maiorConc && menorSeq == menorConc){
+        printf("Maior elemento do vetor: %d\nMenor elemento do vetor: %d\n", maiorSeq, menorConc);
     } else {
-        fprintf(stderr, "ERRO--soma-incorreta");
+        fprintf(stderr, "ERRO--soma-incorreta\n");
     }
-        // Menor elemento
-    if(menorSeq == menorConc){
-        printf("Menor elemento do vetor: %f\n", menorSeq);
-    } else {
-        fprintf(stderr, "ERRO--soma-incorreta");
-    }
+
     
+    printf("Ganho: %f\n", (Tseq/Tconc));
 
     /* Libera os espaços de memória alocados */
     free(vetor);
