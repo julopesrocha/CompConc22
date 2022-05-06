@@ -33,7 +33,9 @@ Por conta disso, todos os testes foram realizados usando como base o intervalo 1
 ### Dimensão 10<sup>5</sup>
 | Solução | Tempo de execução |
 | --- | --- |
-| **Sequencial** | ?s |                                                                                                                                                                                 
+| **Sequencial** | ?s |
+
+| **1 Thread** | ?s |
 | **2 Threads** | ?s |
 | **4 Threads** | ?s |
 
@@ -41,6 +43,7 @@ Por conta disso, todos os testes foram realizados usando como base o intervalo 1
 | Solução | Tempo de execução |
 | --- | --- |
 | **Sequencial** | ?s |                                                                                                                                                                                 
+| **1 Thread** | ?s |
 | **2 Threads** | ?s |
 | **4 Threads** | ?s |
 
@@ -48,6 +51,7 @@ Por conta disso, todos os testes foram realizados usando como base o intervalo 1
 | Solução | Tempo de execução |
 | --- | --- |
 | **Sequencial** | ?s |                                                                                                                                                                                 
+| **1 Thread** | ?s |
 | **2 Threads** | ?s |
 | **4 Threads** | ?s |
 
