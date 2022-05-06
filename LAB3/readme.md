@@ -40,7 +40,6 @@ Por conta disso, todos os testes foram realizados usando como base o intervalo 1
 ### Dimensão 10<sup>7</sup>
 | Nº Threads | Tempo Sequencial | Tempo Concorrente | Ganho de Aceleração |
 | --- | --- |
-| **Sequencial** | ?s |                                                                                                                                                                                 
 | **1 Thread** | 0.029817s | 0.043818s | 0.043818s |
 | **2 Threads** | 0.033610s |
 | **4 Threads** | 0.043818s |
