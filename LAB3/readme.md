@@ -15,7 +15,7 @@ Análise de desempenho e cálculo da aceleração do programa de solução seque
 - Arquitetura: x86_64
 
 ## Estratégia de Divisão das threads
-:checkbox: Optei por fazer uma divisão das threads em blocos, portanto, tendo 4 threads, dividimos o vetor em 4 grandes blocos, nos quais cada thread estará processando seu bloco respectivo.
+:exclamation: Optei por fazer uma divisão das threads em blocos, portanto, tendo 4 threads, dividimos o vetor em 4 grandes blocos, nos quais cada thread estará processando seu bloco respectivo.
 
 ## Como rodar o programa
 :thinking: Compila e executa o programa através dos comandos:
@@ -33,45 +33,51 @@ Por conta disso, todos os testes foram realizados usando como base o intervalo 1
 ### Dimensão 10<sup>5</sup>
 | Solução | Tempo de execução |
 | --- | --- |
-| **Sequencial** | ?s |                                                                                                                                                                                 
-| **2 Threads** | ?s |
-| **4 Threads** | ?s |
+| **Sequencial** | 0.001834s |                                                                                                                                                                                 
+| **1 Thread** | 0.002511s |
+| **2 Threads** | 0.001483s |
+| **4 Threads** | 0.001620s |
 
 ### Dimensão 10<sup>7</sup>
 | Solução | Tempo de execução |
 | --- | --- |
-| **Sequencial** | ?s |                                                                                                                                                                                 
-| **2 Threads** | ?s |
-| **4 Threads** | ?s |
+| **Sequencial** | 0.033610s |                                                                                                                                                                                 
+| **1 Thread** | 0.029204s |
+| **2 Threads** | 0.012552s |
+| **4 Threads** | 0.009918s |
 
 ### Dimensão 10<sup>8</sup>
 | Solução | Tempo de execução |
 | --- | --- |
-| **Sequencial** | ?s |                                                                                                                                                                                 
-| **2 Threads** | ?s |
-| **4 Threads** | ?s |
+| **Sequencial** | 0.324655s |                                                                                                                                                                                 
+| **1 Thread** | 0.281228s |
+| **2 Threads** | 0.189437s |
+| **4 Threads** | 0.062707s |
 
 ## Cálculo da aceleração
 :abacus: Para realizar o cálculo da aceleração e poder estimar o ganho de desempenho, usaremos a Lei de Amdahl. O ganho de velocidade da execução é dado por: 
-T<sub>sequencial</sub> / t<sub>s</sub> + t<sub>s</sub>, onde
+T<sub>sequencial</sub> / t<sub>s</sub> + t<sub>c</sub>, onde
 - T<sub>sequencial</sub>: Tempo total de execução do programa sequencial
 - t<sub>s</sub>: Tempo da parte sequencial do programa
-- t<sub>s</sub>: Tempo da parte concorrente do programa usando P processadores
+- t<sub>c</sub>: Tempo da parte concorrente do programa usando P processadores
 
 ### Dimensão 10<sup>5</sup>
  | Threads | Aceleração |
  | --- | --- |
- | **2 Threads** | ?s |
- | **4 Threads** | ?s |
+ | **1 Thread** | 0.730450s |
+ | **2 Threads** | 1.28438s |
+ | **4 Threads** | 0.844427s |
  
 ### Dimensão 10<sup>7</sup>
  | Threads | Aceleração |
  | --- | --- |
- | **2 Threads** | ?s |
- | **4 Threads** | ?s |
+ | **1 Thread** | 1.020977s |
+ | **2 Threads** | 2.677728s |
+ | **4 Threads** | 4.417935s |
  
  ### Dimensão 10<sup>8</sup>
  | Threads | Aceleração |
  | --- | --- |
- | **2 Threads** | ?s |
- | **4 Threads** | ?s |
+ | **1 Thread** | 1.154419s |
+ | **2 Threads** | 2.188666s |
+ | **4 Threads** | 3.726620s |
