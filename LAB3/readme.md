@@ -33,27 +33,26 @@ Por conta disso, todos os testes foram realizados usando como base o intervalo 1
 ### Dimensão 10<sup>5</sup>
 | Solução | Tempo de execução |
 | --- | --- |
-| **Sequencial** | ?s |
-
-| **1 Thread** | ?s |
-| **2 Threads** | ?s |
-| **4 Threads** | ?s |
+| **Sequencial** | ?s |                                                                                                                                                                                 
+| **1 Thread** | 0.001834s |
+| **2 Threads** | 0.001905s |
+| **4 Threads** | 0.001368s |
 
 ### Dimensão 10<sup>7</sup>
 | Solução | Tempo de execução |
 | --- | --- |
 | **Sequencial** | ?s |                                                                                                                                                                                 
-| **1 Thread** | ?s |
-| **2 Threads** | ?s |
-| **4 Threads** | ?s |
+| **1 Thread** | 0.029817s |
+| **2 Threads** | 0.033610s |
+| **4 Threads** | 0.043818s |
 
 ### Dimensão 10<sup>8</sup>
 | Solução | Tempo de execução |
 | --- | --- |
 | **Sequencial** | ?s |                                                                                                                                                                                 
-| **1 Thread** | ?s |
-| **2 Threads** | ?s |
-| **4 Threads** | ?s |
+| **1 Thread** | 0.324655s |
+| **2 Threads** | 0.414614s |
+| **4 Threads** | 0.2333683s |
 
 ## Cálculo da aceleração
 :abacus: Para realizar o cálculo da aceleração e poder estimar o ganho de desempenho, usaremos a Lei de Amdahl. O ganho de velocidade da execução é dado por: 
