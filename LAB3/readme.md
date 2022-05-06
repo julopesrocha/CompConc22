@@ -31,7 +31,7 @@ $ ./extemos-vetor <dimensão do vetor> <número de threads>
 Por conta disso, todos os testes foram realizados usando como base o intervalo 100 < x<sub>i</sub> < 500.
 
 ### Dimensão 10<sup>5</sup>
-| Dimensão | Nº Threads | Tempo de execução (Sequencial) |
+| Nº Threads | Tempo de execução |
 | --- | --- |
 | **Sequencial** | ?s |                                                                                                                                                                                 
 | **1 Thread** | 0.001834s |
