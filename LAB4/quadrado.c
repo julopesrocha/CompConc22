@@ -113,7 +113,7 @@ int main(int argc, char *argv[]){
 
     /* Preenche o vetor de entrada com valores aleatórios */
     for(int i = 0; i<dim; i++){
-        vetorEntrada[i] = rand()%(+1);
+        vetorEntrada[i] = rand()%(i+1);
     }
 
     /* Execução | Sequencial */
@@ -125,8 +125,6 @@ int main(int argc, char *argv[]){
     Tseq = deltaTempo(inicio, "Sequencial");
 
     /* Execução | Concorrente */
-        //tomada de tempo
-    GET_TIME(inicio);
 
         // Alocação de memória
     tid = (pthread_t *) malloc(sizeof(pthread_t) * nthreads);
@@ -138,6 +136,8 @@ int main(int argc, char *argv[]){
     pthread_mutex_init(&mutex, NULL);
 
         // Cria threads
+        //tomada de tempo
+    GET_TIME(inicio);
     for(long int i=0; i<nthreads; i++){
         if(pthread_create(tid+i, NULL, tarefaPrimos, (void*) i)){
             fprintf(stderr, "ERRO--pthread-create\n");
@@ -171,7 +171,7 @@ int main(int argc, char *argv[]){
     }
     
         //Exibe ganhos de execução
-    printf("Percentual de Ganho: %lf\n", Tseq/Tconc);
+    printf("Percentual: %lf\n", Tseq/Tconc);
 
     /* Libera os espaços de memória alocados */
     pthread_mutex_destroy(&mutex);
