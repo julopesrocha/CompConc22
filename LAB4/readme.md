@@ -1,10 +1,9 @@
-# Laboratório 03 | Relatório
-Análise de desempenho e cálculo da aceleração do programa de solução sequencial e uma solução concorrente para o problema de encontrar o menor e o maior valor de um vetor de numeros reais.
+# Laboratório 04 | Relatório
+Análise de desempenho e cálculo da aceleração do programa de solução sequencial e uma solução concorrente para o problema de: dado um vetor de entrada de numeros inteiros, gerar um  vetor de saıda de números reais, calculando a raiz quadrada de todos os elementos do vetor de entrada que forem primos.
 
 
 ## Índice
 * [Informações sobre o hardware](#informações-sobre-o-hardware)
-* [Estratégia de Divisão das threads](#estrategia-de-divisao-das-threads)
 * [Como rodar o programa](#como-rodar-o-programa)
 * [Tempos de execução](#tempos-de-execução)
 * [Cálculo da aceleração](#cálculo-da-aceleração)
@@ -14,16 +13,13 @@ Análise de desempenho e cálculo da aceleração do programa de solução seque
 - Nome do Modelo: Intel(R) Core(TM) i3-8145U CPU @ 2.10GHz
 - Arquitetura: x86_64
 
-## Estratégia de Divisão das threads
-:exclamation: Optei por fazer uma divisão das threads em blocos, portanto, tendo 4 threads, dividimos o vetor em 4 grandes blocos, nos quais cada thread estará processando seu bloco respectivo.
-
 ## Como rodar o programa
 :thinking: Compila e executa o programa através dos comandos:
 ```
-$ gcc extremos-vetor.c -o extremos-vetor -Wall -lpthread 
+$ gcc quadrado.c -o quadrado -Wall -lpthread lm
 ```
 ```
-$ ./extemos-vetor <dimensão do vetor> <número de threads>
+$ ./quadrado <dimensão do vetor> <número de threads>
 ```
 
 ## Tempos de execução
