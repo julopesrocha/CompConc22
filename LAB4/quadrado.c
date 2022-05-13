@@ -19,14 +19,28 @@ double *vetorSaidaSequencial;
 double *vetorSaidaConcorrente;
 pthread_mutex_t mutex; // variável de lock para exclusão mútua
 
-int primo(long long int n){
-    if(n==1) return 0;
-    if(n==1) return 1;
-    if(n%2 == 0) return 0;
-    for(int i = 3; i<sqrt(n)+1; i+2){
-        if(n%i==0) return 0;
+int isPrime(long int n){
+  long int i, s;
+ 
+  if(n <= 3)
+    return ! ( n < 2 );
+ 
+  // Se for divisível por 2 ou 3, não é primo!
+  if ( ( n % 2 ) == 0 || ( n % 3 ) == 0)
+    return 0;
+  
+  s = sqrt(n);
+  
+  for(i = 5; i <= s; i += 4 ){
+    if ( ( n % i ) == 0){
+        return 0;
     }
-    return 1;
+    i += 2;
+    if(( n % i ) == 0){
+        return 0;
+    }
+  }
+  return 1;
 }
 
 void * tarefaPrimos(){
@@ -39,7 +53,7 @@ void * tarefaPrimos(){
     pthread_mutex_unlock(&mutex);
 
     while(i_local<dim){
-        if(primo(vetorEntrada[i_local])){
+        if(isPrime(vetorEntrada[i_local])){
             vetorSaidaConcorrente[i_local]= sqrt(vetorEntrada[i_local]);
         }
         else {
@@ -69,10 +83,11 @@ double deltaTempo(double inicio, char mensagem[]) {
 // Processa Primos
 void processaPrimos(int *vetorEntrada, double *vetorSaida, int dim){
     for(int i = 0; i<dim; i++){
-            if(primo(vetorEntrada[i])){
+            if(isPrime(vetorEntrada[i])){
                 vetorSaida[i] = sqrt(vetorEntrada[i]);
+            } else {
+                vetorSaida[i] = vetorEntrada[i];
             }
-            vetorSaida[i] = vetorEntrada[i];
     }
 }
 

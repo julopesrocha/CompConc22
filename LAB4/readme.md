@@ -31,7 +31,7 @@ $ ./quadrado <dimensão do vetor> <número de threads>
 | **Sequencial** |  0.014490s |                                                                                                                                                                                 
 | **1 Thread** | 0.013411s |
 | **2 Threads** | 0.012902s |
-| **4 Threads** | s |
+| **4 Threads** | 0.011788s |
 
 ### Dimensão 10<sup>7</sup>
 | Solução | Tempo de execução |
@@ -61,7 +61,7 @@ T<sub>sequencial</sub> / t<sub>s</sub> + t<sub>c</sub>, onde
  | --- | --- |
  | **1 Thread** | 1.080469s |
  | **2 Threads** | 1.327405s |
- | **4 Threads** | s |
+ | **4 Threads** | 1.133558s |
  
 ### Dimensão 10<sup>7</sup>
  | Threads | Aceleração |
