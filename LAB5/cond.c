@@ -11,9 +11,7 @@ pthread_cond_t x_cond;
 int x=0;
 
 /* Exibe mesngaens 2-4 */
-
 void *MI(void *t){
-    // int *id = (int*)t;
     printf("MI | thread  iniciada\n");
 
     pthread_mutex_lock(&x_mutex);
@@ -27,34 +25,41 @@ void *MI(void *t){
         printf("Sente-se por favor.\n");
     } else if(x==3){
         printf("Aceita um copo d'agua?\n");
-    } else if(x==4){
-        printf("Volte sempre!\n");
     }
     x++;
-    pthread_cond_signal(&x_cond);
+    pthread_cond_broadcast(&x_cond);
     pthread_mutex_unlock(&x_mutex); 
     pthread_exit(NULL);
 }
 
-/* Exibe mensagens 1 e 5 */
+/* Primeira mensagem */
 void *M1(void *t) {
-    /* identificar a thread 5 -> modificar a variavel global(condiçao); 
-       se alguma thread chegar antes deve ser bloqueada;
-       quando a prox chegar, deve verificar a condição e liberar a thread bloqueada,
-       que ira verificar a variavel global e dar prosseguimento a sua condição 
+    /* 
+        A única condição para exibir sua mensagem é que a variável de condição "x" esteja inicializada, com valor igual à 0 
+        Dessa forma se qualquer outra thread for criada primeiro, devem ser bloqueadas até essa priemira execução
     */
      
     pthread_mutex_lock(&x_mutex);
     if(x==0){
         printf("Seja bem-vindo!\n"); // Exibe primeira msg, thread 5
-        x++;
-        pthread_cond_broadcast(&x_cond);
+        x++; // incrementa a variável de condição
+        pthread_cond_broadcast(&x_cond); // libera todas as threads uma vez bloqueadas
     }
     pthread_mutex_unlock(&x_mutex);    
 
     pthread_exit(NULL);
 }
 
+void *BYE(void *t){
+    pthread_mutex_lock(&x_mutex);
+    if(x<4){
+        pthread_cond_wait(&x_cond, &x_mutex);
+        pthread_cond_signal(&x_cond);
+    }
+    printf("Volte sempre!\n");
+    pthread_mutex_unlock(&x_mutex);
+    pthread_exit(NULL);
+}
 
 int main(void){
     pthread_t threads[NTHREADS];
@@ -68,7 +73,7 @@ int main(void){
     pthread_create(&threads[1], NULL, MI, NULL);
     pthread_create(&threads[2], NULL, MI, NULL);
     pthread_create(&threads[3], NULL, MI, NULL);
-    pthread_create(&threads[0], NULL, MI, NULL);
+    pthread_create(&threads[0], NULL, BYE, NULL);
 
     /* Aguarda término de todas as threads */
     for (int i=0; i<NTHREADS; i++){
