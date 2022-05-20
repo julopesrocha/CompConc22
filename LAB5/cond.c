@@ -27,6 +27,8 @@ void *MI(void *t){
         printf("Sente-se por favor.\n");
     } else if(x==3){
         printf("Aceita um copo d'agua?\n");
+    } else if(x==4){
+        printf("Volte sempre!\n");
     }
     x++;
     pthread_cond_signal(&x_cond);
@@ -41,23 +43,18 @@ void *M1(void *t) {
        quando a prox chegar, deve verificar a condição e liberar a thread bloqueada,
        que ira verificar a variavel global e dar prosseguimento a sua condição 
     */
-    printf("M1 | Comecei a thread\n");
      
     pthread_mutex_lock(&x_mutex);
-    if(x==3){
-        pthread_cond_wait(&x_cond, &x_mutex);
-        printf("M1 | Bloqueada\n");  // Exibe thread 1 | última mensagem
-    } else if(x==0){
+    if(x==0){
         printf("Seja bem-vindo!\n"); // Exibe primeira msg, thread 5
         x++;
         pthread_cond_broadcast(&x_cond);
-    } else if(x>3){
-       printf("Volte sempre!\n");  // Exibe thread 1 | última mensagem
-    } 
+    }
     pthread_mutex_unlock(&x_mutex);    
 
     pthread_exit(NULL);
 }
+
 
 int main(void){
     pthread_t threads[NTHREADS];
@@ -71,7 +68,7 @@ int main(void){
     pthread_create(&threads[1], NULL, MI, NULL);
     pthread_create(&threads[2], NULL, MI, NULL);
     pthread_create(&threads[3], NULL, MI, NULL);
-    pthread_create(&threads[0], NULL, M1, NULL);
+    pthread_create(&threads[0], NULL, MI, NULL);
 
     /* Aguarda término de todas as threads */
     for (int i=0; i<NTHREADS; i++){
