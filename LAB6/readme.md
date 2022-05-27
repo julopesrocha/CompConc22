@@ -15,12 +15,10 @@ escritor nao for atendido. Nesta solução, um leitor pode ter de esperar por mu
 (inanição), caso novos escritores cheguem com frequência.
 
 ## Roteiro
-1. Pense o que precisa ser feito para dar prioridade para as operações de escrita,
-como descrito acima.
-2. Implemente a solução projetada, alterando o código que implementa o padrão básico leitores/escritores (fornecido junto com esse roteiro).
-3. Execute a aplicação varias vezes e avalie os resultados obtidos (observe se ocorre
-situações onde a prioridade de escrita foi contemplada).
-4. Altere o numero de threads leitoras e escritoras e reavalie a aplicação.
+1. Para que fosse atendidas as modificações requeridas foi adicionada uma variável global que será um contador representando a lista de espera das threads escritoras
+2. Para que a leitura seja iniciada, é necessaŕio verificar se, além de não haver uma thread escritora executando, também não há nenhuma thread escritora aguardando na lista de espera, pois a escritora teria prioridade
+3. Ao iniciar o fluxo da escritora, quando bloqueamos a variavel mutex, incrementamos a lista de espera e é realizada a verificação se existe alguma escritora/leitora executando nesse momento. Se não houver, a thread sairá da lista de espera e iniciará a escrita
+4. Ao finalizar a escrita, se não houver thread na lista de espera, será lançado um broadcast para que as leitoras sejam liberadas, garantindo que a segurança e prioridade da lista de espera das escritoras
 
 ## Informações sobre o hardware
 - Distro: Ubuntu 20.04.4 LTS
