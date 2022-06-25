@@ -1,6 +1,6 @@
-# Laboratório 04 | Relatório
-Análise de desempenho e cálculo da aceleração do programa de solução sequencial e uma solução concorrente para o problema de: dado um vetor de entrada de numeros inteiros, gerar um  vetor de saıda de números reais, calculando a raiz quadrada de todos os elementos do vetor de entrada que forem primos.
-
+# Laboratório 07 | Relatório
+O objetivo deste Laboratorio é ́introduzir a programação concorrente em Java. Para
+cada atividade, siga o roteiro proposto e responda as questões colocadas.
 
 ## Índice
 * [Informações sobre o hardware](#informações-sobre-o-hardware)
