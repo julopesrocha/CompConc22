@@ -19,10 +19,10 @@ Análise de desempenho e cálculo da aceleração do programa de solução seque
 ## Como rodar o programa
 :thinking: Compila e executa o programa através dos comandos:
 ```
-$ javac 
+$ javac Pares.java
 ```
 ```
-$ java <classe principal(main)>
+$ java Par
 ```
 
 ## Análise | Atividade 1 | HelloThread.java
