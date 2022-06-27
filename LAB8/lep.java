@@ -1,18 +1,19 @@
 // Monitor que implementa a logica do padrao leitores/escritores
 class LE {
     private int leit, escr;  
+    int data;
     
     // Construtor
     LE() { 
        this.leit = 0; //leitores lendo (0 ou mais)
        this.escr = 0; //escritor escrevendo (0 ou 1)
-    } 
+       this.data = 0; //recurso
+    }
     
     // Entrada para leitores
     public synchronized void EntraLeitor (int id) {
       try { 
         while (this.escr > 0) {
-        //if (this.escr > 0) {
            System.out.println ("le.leitorBloqueado("+id+")");
            wait();  //bloqueia pela condicao logica da aplicacao 
         }
@@ -72,7 +73,11 @@ class LE {
       try {
         for (;;) {
           this.monitor.EntraLeitor(this.id);
-          for (i=0; i<100000000; i++) {j=j/2;} //...loop bobo para simbolizar o tempo de leitura
+          if(this.monitor.data%2 == 0){
+            System.out.println("Par! "+this.monitor.data);
+          } else {
+            System.out.println("Ímpar " + this.monitor.data);
+          }
           this.monitor.SaiLeitor(this.id);
           sleep(this.delay); 
         }
@@ -100,12 +105,43 @@ class LE {
       try {
         for (;;) {
           this.monitor.EntraEscritor(this.id); 
-          for (i=0; i<100000000; i++) {j=j/2;} //...loop bobo para simbolizar o tempo de escrita
+          this.monitor.data +=1;
           this.monitor.SaiEscritor(this.id); 
           sleep(this.delay); //atraso bobo...
         }
       } catch (InterruptedException e) { return; }
     }
+  }
+
+  // Processa
+  class Processa extends Thread {
+    int id; //identificador da thread
+    int delay; //atraso bobo...
+    LE monitor; //objeto monitor para coordenar a lógica de execução das threads
+
+    //Constructor
+    Processa(int id, int delayTime, LE m) {
+        this.id = id;
+        this.delay = delayTime;
+        this.monitor = m;
+    }
+
+    // Método executado pela thread
+    public void run () {
+        double j=777777777.7, i;
+        try {
+          for (;;) {
+            this.monitor.EntraLeitor(this.id);
+            System.out.println("Thread de Processamento leu: "+ this.monitor.data);
+            this.monitor.SaiLeitor(this.id);
+            for (i=0; i<100000000; i++) {j=j/2;} //...loop bobo para simbolizar o tempo de processamento
+            this.monitor.EntraEscritor(this.id); 
+            this.monitor.data = this.id; // atribui o valor do id a variavel principal
+            this.monitor.SaiEscritor(this.id); 
+            sleep(this.delay); //atraso bobo...
+          }
+        } catch (InterruptedException e) { return; }
+      }
   }
   
   //--------------------------------------------------------
@@ -113,13 +149,16 @@ class LE {
   class LeitorEscritor {
     static final int L = 4;
     static final int E = 3;
+    static final int P = 2;
+    private int data = 0;
   
     public static void main (String[] args) {
       int i;
       LE monitor = new LE();            // Monitor (objeto compartilhado entre leitores e escritores)
       Leitor[] l = new Leitor[L];       // Threads leitores
       Escritor[] e = new Escritor[E];   // Threads escritores
-  
+      Processa[] p = new Processa[P];
+
       //inicia o log de saida
       System.out.println ("import verificaLE");
       System.out.println ("le = verificaLE.LE()");
@@ -132,5 +171,10 @@ class LE {
          e[i] = new Escritor(i+1, (i+1)*500, monitor);
          e[i].start(); 
       }
+      for (i=0; i<P; i++) {
+        p[i] = new Processa(i+1, (i+1)*500, monitor);
+        p[i].start(); 
+     }
+
     }
   }
