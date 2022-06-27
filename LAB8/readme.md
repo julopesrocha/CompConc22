@@ -16,10 +16,10 @@ basico leitores/escritores.
 ## Como rodar o programa
 :thinking: Compila e executa o programa através dos comandos:
 ```
-$ javac Lep.java
+$ javac lep.java
 ```
 ```
-$ java Lep
+$ java LeitorEscritor
 ```
 
 ## Descrição
