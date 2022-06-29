@@ -15,10 +15,10 @@ O objetivo deste Laboratorio é praticar o uso de semáforos para implementar ex
 ## Como rodar o programa
 :thinking: Compila e executa o programa através dos comandos:
 ```
-$ 
+$ gcc -o ordem.c ordem -lpthread -Wall
 ```
 ```
-$ 
+$ ./ordem
 ```
 ## Exercícios de Introdução | Semáforos em C
 
@@ -53,8 +53,7 @@ Sim, pois dessa forma o condicionamento de execução das threads não irá mais
 ## Implementação | LAB 9 
 
 **Objetivo**
-Projetar e implementar um programa concorrente onde a ordem de execuc ̧ao ̃
-das threads e controlada no programa.
+Projetar e implementar um programa concorrente onde a ordem de execução das threads e controlada no programa.
 
 **Roteiro**
 Implemente um programa com 5 threads:
