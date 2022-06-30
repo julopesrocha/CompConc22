@@ -11,58 +11,68 @@
 
 // Variaveis globais
 sem_t condt, condt1;     //semaforos para sincronizar a ordem de execucao das threads
+int cont=0;
 
-//funcao executada pela thread 1
+//funcao executada pela \nthread 1
 void *t1 (void *threadid) {
   int *tid = (int*) threadid;
-  printf("Thread : %d esta executando...\n", *tid);
+  printf("\nThread : %d esta executando...\n", *tid);
   sem_wait(&condt1);
   printf("Volte sempre!");
-  printf("Thread : %d terminou!\n", *tid);
+  printf("\nThread : %d terminou!\n", *tid);
   pthread_exit(NULL);
 }
 
-//funcao executada pela thread 2
+//funcao executada pela \nthread 2
 void *t2 (void *threadid) {
   int *tid = (int*) threadid;
-  printf("Thread : %d esta executando...\n", *tid);
+  printf("\nThread : %d esta executando...\n", *tid);
   sem_wait(&condt); //espera T5 executar
   printf("Fique a vontade.\n");
   sem_post(&condt);
-  printf("Thread : %d terminou!\n", *tid);
-  sem_post(&condt1);
+  cont++;
+  printf("\nThread : %d terminou!\n", *tid);
+  if(cont == 3){
+    sem_post(&condt1);
+  }
   pthread_exit(NULL);
 }
 
-//funcao executada pela thread 3
+//funcao executada pela \nthread 3
 void *t3 (void *threadid) {
     int *tid = (int*) threadid;
-    printf("Thread : %d esta executando...\n", *tid);
+    printf("\nThread : %d esta executando...\n", *tid);
     sem_wait(&condt); //espera T5 executar
     printf("Sente-se por favor.\n");
     sem_post(&condt);
-    printf("Thread : %d terminou!\n", *tid);
-    sem_post(&condt1);
+    cont++;
+    printf("\nThread : %d terminou!\n", *tid);
+    if(cont == 3){
+      sem_post(&condt1);
+  }
     pthread_exit(NULL);
 }
 
 void *t4 (void *threadid) {
     int *tid = (int*) threadid;
-    printf("Thread : %d esta executando...\n", *tid);
+    printf("\nThread : %d esta executando...\n", *tid);
     sem_wait(&condt); //espera T5 executar
     printf("Aceita um copo d'água?\n");
     sem_post(&condt);
-    printf("Thread : %d terminou!\n", *tid);
+    cont++;
+    printf("\nThread : %d terminou!\n", *tid);
+    if(cont == 3){
     sem_post(&condt1);
+  }
     pthread_exit(NULL);
 }
 
 void *t5 (void *threadid) {
     int *tid = (int*) threadid;
-    printf("Thread : %d esta executando...\n", *tid);
+    printf("\nThread : %d esta executando...\n", *tid);
     printf("Seja bem-vindo!\n");
     sem_post(&condt);
-    printf("Thread : %d terminou!\n", *tid);
+    printf("\nThread : %d terminou!\n", *tid);
     pthread_exit(NULL);
 }
 
