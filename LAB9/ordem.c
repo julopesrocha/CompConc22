@@ -20,6 +20,7 @@ void *t1 (void *threadid) {
   sem_wait(&condt1);
   printf("Volte sempre!");
   printf("\nThread : %d terminou!\n", *tid);
+  cont=0;
   pthread_exit(NULL);
 }
 
@@ -29,12 +30,12 @@ void *t2 (void *threadid) {
   printf("\nThread : %d esta executando...\n", *tid);
   sem_wait(&condt); //espera T5 executar
   printf("Fique a vontade.\n");
-  sem_post(&condt);
   cont++;
-  printf("\nThread : %d terminou!\n", *tid);
   if(cont == 3){
     sem_post(&condt1);
   }
+  sem_post(&condt);
+  printf("\nThread : %d terminou!\n", *tid);
   pthread_exit(NULL);
 }
 
