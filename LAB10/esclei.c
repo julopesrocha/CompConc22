@@ -19,10 +19,11 @@ float c, f=23.7; //variaveis auxiliares
 
 //funcao executada pelos leitores
 void *Leitor (void *threadid) {
-    // int tid =  * (int*) threadid, i;
+    int tid =  * (int*) threadid;
     while(1) {
         sem_wait(&em_l); 
         l++;
+        printf("Thread [%d] quer ler.\n", tid);
         if(l==1) {
           sem_wait(&escr);
         }
@@ -30,7 +31,11 @@ void *Leitor (void *threadid) {
         //faz leitura
         sem_wait(&em_l); 
         l--;
-        if(l==0) sem_post(&escr);
+        if(l==0){
+          printf("Thread [%d] finalizou a fila de leitores\n", tid);
+          printf("Escrita liberada \n");
+          sem_post(&escr);
+        } 
         sem_post(&em_l);
     }   
   pthread_exit(NULL);
@@ -38,11 +43,11 @@ void *Leitor (void *threadid) {
 
 //funcao executada pelos escritores
 void *Escritor (void *threadid) {
-  // int tid =  * (int*) threadid, i;
+  int tid =  * (int*) threadid;
   while(1) {
     sem_wait(&em_e); 
     e++;
-    printf("Thread [1] quer escrever." );
+    printf("Thread [%d] quer escrever.\n", tid);
     if(e==1){
       sem_wait(&leit);
     };
@@ -53,6 +58,8 @@ void *Escritor (void *threadid) {
     sem_wait(&em_e); 
     e--;
     if(e==0) {
+      printf("Thread [%d] finalizou a fila de escritores\n", tid);
+      printf("Leitura liberada\n");
       sem_post(&leit);
     };
     sem_post(&em_e);
@@ -64,10 +71,10 @@ void *Escritor (void *threadid) {
 int main(int argc, char *argv[]) {
   pthread_t tid[L+E];
   int t, id[L+E];
-  printf("Criando semáforos");
+  printf("Criando semáforos\n");
   //inicia os semaforos
-  sem_init(&leit, 0, 0);
-  sem_init(&escr, 0, 0);
+  sem_init(&leit, 0, 1);
+  sem_init(&escr, 0, 1);
   sem_init(&em_e, 0, 1);
   sem_init(&em_l, 0, 1);
 
