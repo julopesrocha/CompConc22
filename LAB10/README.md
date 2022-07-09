@@ -32,7 +32,7 @@ escritor esperando, o acesso para novos leitores é bloqueado até que o escrito
 
 1. Quais devem ser os valores iniciais dos semaforos (em_e, em_l, escr, leit) para que o
 algoritmo funcione corretamente?
-
+Por serem semaforos que serão utilizados para exclusão mútua, 
 
 2. É possível simplificar esse codigo (reduzir o uso dos mecanismos de sincronização)?
 
